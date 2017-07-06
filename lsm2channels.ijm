@@ -6,6 +6,7 @@
  * Convert lsm files into seprate channels.
  * 
  * Channels have suffix CH1, CH2, DIC. Second channel is optional.
+ * Assumes that DIC is las channel
  */
 
 // See also Process_Folder.py for a version of this code
@@ -36,7 +37,11 @@ function processFile(input, output, file) {
 	for(i=1; i<=channels; i++) {
 		selectImage(orginal);
 		run("Slice Keeper", "first=&i last=&all increment=&channels");
-		nameToSave = file + "_CH" + i + ".tif";
+		if(i==channels) {
+			nameToSave = file + "_CH_" + "DIC" + ".tif";
+		} else {
+			nameToSave = file + "_CH_" + i + ".tif";
+		}
 		save(output + File.separator + nameToSave);
 		close();
 	}
