@@ -9,12 +9,12 @@
 setBatchMode(true);
 // Map sizes are hardcoded !!
 
-convM=readMap("/home/baniuk/Documents/Repos/Prot_counting/fromMail/","segmented_0_convexityMap.maQP");
-motM=readMap("/home/baniuk/Documents/Repos/Prot_counting/fromMail/","segmented_0_motilityMap.maQP");
-xC = readMap("/home/baniuk/Documents/Repos/Prot_counting/fromMail/","segmented_0_xMap.maQP");
-yC = readMap("/home/baniuk/Documents/Repos/Prot_counting/fromMail/","segmented_0_yMap.maQP");
+convM=readMap("/home/baniuk/Documents/Repos/QUIMP-Matlab/Matlab/Segmentation/E1/","OUT81_fluoreszenz-test_0_convexityMap.maQP");
+motM=readMap("/home/baniuk/Documents/Repos/QUIMP-Matlab/Matlab/Segmentation/E1/","OUT81_fluoreszenz-test_0_motilityMap.maQP");
+xC = readMap("/home/baniuk/Documents/Repos/QUIMP-Matlab/Matlab/Segmentation/E1/","OUT81_fluoreszenz-test_0_xMap.maQP");
+yC = readMap("/home/baniuk/Documents/Repos/QUIMP-Matlab/Matlab/Segmentation/E1/","OUT81_fluoreszenz-test_0_yMap.maQP");
 
-open("/home/baniuk/Documents/Repos/Prot_counting/fromMail/"+"segmentedRGB.tif");
+open("/home/baniuk/Documents/Repos/QUIMP-Matlab/Matlab/Segmentation/"+"fluoreszenz-test_RGB.tif");
 orgIm = getImageID();
 
 selectImage(orgIm);ns = nSlices;
@@ -33,12 +33,17 @@ for(s=0;s<ns;s++) {
 			selectImage(yC); y = getPixel(i,s);
 			setColor("blue");
 			// draw point
-			selectImage(orgIm); drawRect(x, y, 2, 2);
+			selectImage(orgIm); drawRect(x, y, 1, 1);
 		} else if(mp>0) { // plot if expanding (but may be concave)
 			selectImage(xC); x = getPixel(i,s);
 			selectImage(yC); y = getPixel(i,s);
 			setColor("yellow");
-			selectImage(orgIm); drawRect(x, y, 2, 2);
+			selectImage(orgIm); drawRect(x, y, 1, 1);
+		} else { // all other
+			selectImage(xC); x = getPixel(i,s);
+			selectImage(yC); y = getPixel(i,s);
+			setColor(255,255,255);
+			selectImage(orgIm); drawRect(x, y, 1, 1);
 		}
 	}
 	// plot if both maps negative
@@ -49,7 +54,7 @@ for(s=0;s<ns;s++) {
 			selectImage(xC); x = getPixel(i,s);
 			selectImage(yC); y = getPixel(i,s);
 			setColor("red");
-			selectImage(orgIm); drawRect(x, y, 2, 2);
+			selectImage(orgIm); drawRect(x, y, 1, 1);
 		}
 	}
 }
